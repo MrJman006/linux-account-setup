@@ -18,14 +18,14 @@ function goto()
         echo "    goto"
         echo ""
         echo "USAGE"
-        echo "    goto [options] [path]"
+        echo "    goto [options] [path|history-number]"
         echo ""
         echo "DESCRIPTION"
         echo "    goto is a tool to more easily navigate directories from the command line."
         echo "    It not only performs the same function as the traditional 'cd' command,"
         echo "    but supports adding and removing destinations to a history. Call goto"
         echo "    with a valid destination to navigate to it. Call goto without any path argument"
-        echo "    to choose a destination from the history. Use the '--add' and '--remove'"
+        echo "    to choose a destination from the history. Use the '--add' and '--delete'"
         echo "    options to modify the history."
         echo ""
         echo "OPTIONS"
@@ -33,14 +33,18 @@ function goto()
         echo "        Show this manual page."
         echo ""
         echo "    -a|--add"
-        echo "        Add the current directory or the supplied directory to the history."
+        echo "        Add a directory to the history."
         echo ""
-        echo "    -r|--remove"
-        echo "        Remove the current directory or the supplied directory from the history."
+        echo "    -d|--delete"
+        echo "        Delete a directory form the history."
         echo ""
         echo "ARGUMENTS"
         echo "    [path]"
-        echo "        A path to go to. If supplied with the '--add' or '--remove' flag,"
+        echo "        A path to go to. If supplied with the '--add' or '--delete' flag,"
+        echo "        the history will be modified instead."
+        echo ""
+        echo "    [history-number]"
+        echo "        The history number to go to. If supplied with the '--add' or '--delete' flag,"
         echo "        the history will be modified instead."
         echo ""
         echo "END"
@@ -55,7 +59,7 @@ function goto()
     local -A options
 
     options[add]="no"
-    options[remove]="no"
+    options[delete]="no"
     options[interactive]="no"
 
     while [ 1 ]
@@ -66,9 +70,9 @@ function goto()
                 shift
                 options[add]="yes"
                 ;;
-            -r|--remove)
+            -d|--delete)
                 shift
-                options[remove]="yes"
+                options[delete]="yes"
                 ;;
             --)
                 shift
@@ -93,9 +97,9 @@ function goto()
     # Check for conflicting options.
     #
 
-    if [[ "${options[add]}" == "yes" ]] && [[ "${options[remove]}" == "yes" ]]
+    if [[ "${options[add]}" == "yes" ]] && [[ "${options[delete]}" == "yes" ]]
     then
-        echo "You cannot use '--add' and '--remove' together."
+        echo "You cannot use '--add' and '--delete' together."
         return 1
     fi
 
@@ -123,6 +127,9 @@ function goto()
     then
         options[interactive]="yes"
         path="$(pwd -P)"
+    elif $(echo "${arguments[0]}" | grep -Pq "^[0-9]+$")
+    then
+        path="$(sort "${history_file}" | head -n ${arguments[0]} | tail -n 1)"
     elif [[ ! -d "${arguments[0]}" ]]
     then
         echo "Error: The supplied path is not a valid destination."
@@ -157,7 +164,7 @@ function goto()
         # Remove the path from the history.
         #
 
-        if [[ "${options[remove]}" == "yes" ]]
+        if [[ "${options[delete]}" == "yes" ]]
         then
             sed -r -i "\|${path}|d" "${history_file}"
             return 0
@@ -177,9 +184,9 @@ function goto()
 
     local prompt
 
-    if [[ "${options[remove]}" == "yes" ]]
+    if [[ "${options[delete]}" == "yes" ]]
     then
-        prompt="remove: "
+        prompt="delete: "
     else
         prompt="goto: "
     fi
@@ -198,10 +205,11 @@ function goto()
         return 1
     fi
 
-    if [[ "${options[remove]}" == "yes" ]]
+    if [[ "${options[delete]}" == "yes" ]]
     then
-        sed -i -e "${line_item}d" "${history_file}"
+        sort "${history_file}" | sed -e "${line_item}d" 1> "${history_file}.new"
+        mv "${history_file}.new" "${history_file}"
     else
-        cd $(cat "${history_file}" | head -n ${line_item} | tail -n 1)
+        cd $(sort "${history_file}" | head -n ${line_item} | tail -n 1)
     fi
 }
