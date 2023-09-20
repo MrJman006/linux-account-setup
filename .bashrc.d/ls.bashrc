@@ -1,0 +1,6 @@
+alias ll="ls -l --color=auto"
+alias lla="ls -lA --color=auto"
+alias llh="ls -lh --color=auto"
+alias llah="ls -lAh --color=auto"
+alias lz="ls --size -S -h -1"
+alias lza="ls -A --size -S -h -1"
