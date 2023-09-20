@@ -1,15 +1,22 @@
-gen_passphrase()
+function generate_passphrase()
 {
+    local show_usage="no"
+
     echo "$@" | grep -Pq "(^|\s+)(-h|--help)(\s+|$)"
     if [[ $? -eq 0 ]]
     then
-        echo "usage: gen_passphrase [--help] [length]"
-        exit 1
+        show_usage="yes"
+    fi
+
+    if [[ "${show_usage}" == "yes" ]]
+    then
+        echo "usage: generate_passphrase [-h|--help] [length]"
+        return 1
     fi
 
     local length=16
 
-    if [ $# -eq 1 ]
+    if [[ $# -eq 1 ]]
     then
         length=$(( ${1} ))
     fi
