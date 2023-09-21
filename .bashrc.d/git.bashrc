@@ -1,4 +1,4 @@
-function init_git()
+function git_init()
 {
     if [[ -d .git ]]
     then
