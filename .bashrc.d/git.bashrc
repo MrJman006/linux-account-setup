@@ -21,12 +21,12 @@ function git_init()
     git config user.name "${commiter_name}"
 
     #
-    # Prompt for the user's name.
+    # Prompt for the user's email.
     #
 
     local commiter_email
     read -p "Commiter Email: " commiter_email
-    git config user.name "${commiter_email}"
+    git config user.email "${commiter_email}" 
 
     #
     # Add a .gitignore file.
