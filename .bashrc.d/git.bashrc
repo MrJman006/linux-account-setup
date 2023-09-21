@@ -2,7 +2,7 @@ function init_git()
 {
     if [[ -d .git ]]
     then
-        echo "The current directory appears to already be a git repo. Remove '.git' and run this command again if you want to set this directory up as a brand new git repository.
+        echo "The current directory appears to already be a git repo. Remove '.git' and run this command again if you want to set this directory up as a brand new git repository."
         return 1
     fi
 
