@@ -29,12 +29,6 @@ function git_init()
     git config user.name "${commiter_email}"
 
     #
-    # Rename the default branch to 'main'.
-    #
-
-    git branch | grep -Pq "main" || git branch -M main
-
-    #
     # Add a .gitignore file.
     #
 
@@ -70,6 +64,16 @@ function git_init()
     #
 
     git commit -m "$(echo "Added repository configuration files.")"
+
+    #
+    # Rename the default branch to 'main'.
+    #
+
+    git branch | grep -Pq "main" || git branch -M main
+
+    #
+    # Notify the user.
+    #
 
     echo "Git repo setup successfully."
 }
