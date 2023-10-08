@@ -1,0 +1,13 @@
+set editing-mode vi
+set show-mode-in-prompt on
+set vi-ins-mode-string 
+set vi-cmd-mode-string (VI)
+
+$if mode=vi
+    set keymap vi-insert
+    "jk": vi-movement-mode
+
+    set keymap vi-command
+    "B": beginning-of-line
+    "E": end-of-line
+$endif

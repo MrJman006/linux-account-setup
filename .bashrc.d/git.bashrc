@@ -69,7 +69,10 @@ function git_init()
     # Rename the default branch to 'main'.
     #
 
-    git branch | grep -Pq "main" || git branch -M main
+    if ! $(git branch | grep -Pq "main")
+    then
+        git branch -M main
+    fi
 
     #
     # Notify the user.
@@ -81,9 +84,15 @@ function git_init()
 export GIT_EDITOR=vim
 
 alias gs="git status"
+
 alias ga="git add"
-alias gd="git diff --diff-algorithm=patience"
-alias gl="git log"
-alias glt="git log --graph --oneline --decorate --all"
+
 alias gc="git commit"
-alias gp="git push"
+
+alias gd="git diff --diff-algorithm=patience"
+
+alias gl="git log"
+alias glg="git log --graph --oneline --decorate"
+alias glgf="git log --graph --oneline --decorate --follow"
+alias glga="git log --graph --oneline --decorate --all"
+alias glgaf="git log --graph --oneline --decorate --all --follow"

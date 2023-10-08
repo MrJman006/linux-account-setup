@@ -1,4 +1,4 @@
-function terminal_color_test()
+function jcd_color_test()
 {
     # Control Sequence Introducer (CSI) bytes.
     local csi="$(printf '\e[')"

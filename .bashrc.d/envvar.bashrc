@@ -2,8 +2,17 @@
 # Setup the 'PATH' variable.
 #
 
-path="/usr/local/bin"
-echo "${path}" | grep -Pq "(^|:)${path}(:|$)" || export PATH="${path}:${PATH}"
+declare -a path_list
+path_list=()
+path_list+=("/usr/local/bin")
+
+for p in "${path_list[@]}"
+do
+    if ! $(echo "${PATH}" | grep -Pq "(^|:)${p}(:|$)")
+    then
+        export PATH="${path}:${PATH}"
+    fi
+done
 
 #
 # Setup other variables.
