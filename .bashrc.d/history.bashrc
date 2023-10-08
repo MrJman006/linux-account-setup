@@ -8,7 +8,7 @@ alias hg="history | grep -P"
 HISTCONTROL=ignorespace:ignoredupes:erasedups
 
 # History logging.
-function log_command()
+function jcd_log_command()
 {
     local date_invoked="$(date +%Y-%m-%d)"
     local time_invoked="$(date +%H-%M-%S)"
@@ -78,7 +78,7 @@ function log_command()
     echo "--"                                           1>>"${history_log_file_path}"
 }
 
-if ! $(echo "${PROMPT_COMMAND}" | grep -Pq "(^|;)log_command;")
+if ! $(echo "${PROMPT_COMMAND}" | grep -Pq "(^|;)jcd_log_command;")
 then
-    export PROMPT_COMMAND="${PROMPT_COMMAND}log_command;"
+    export PROMPT_COMMAND="${PROMPT_COMMAND}jcd_log_command;"
 fi

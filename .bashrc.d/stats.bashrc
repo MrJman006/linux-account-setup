@@ -1,4 +1,4 @@
-function file_count()
+function jcd_file_count()
 {
     #
     # Check for usage option.

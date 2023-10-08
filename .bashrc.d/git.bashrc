@@ -1,4 +1,4 @@
-function git_init()
+function jcd_git_init()
 {
     if [[ -d .git ]]
     then

@@ -1,4 +1,4 @@
-format_seconds()
+function jcd_format_seconds()
 {
     local show_usage="no"
 
