@@ -186,12 +186,40 @@ function show_manual_page()
 
 function main()
 {
-    info "Modifying gnome 'alt + tab' switching behavior..."
+    log_info "Adding GNOME terminal profiles..."
 
-    gsettings set org.gnome.desktop.wm.keybindings switch-applications "[]"
-    gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "[]"
-    gsettings set org.gnome.desktop.wm.keybindings switch-windows-backward "['<Alt><Shift>Tab']"
-    gsettings set org.gnome.desktop.wm.keybindings switch-windows "['<Alt>Tab']"
+    for CONFIG_FILE_PATH in $(find "${THIS_SCRIPT_DIR_PATH}/gnome-terminal-profiles.d" | tail -n +2)
+    do
+        source "${CONFIG_FILE_PATH}"
+
+        local GNOME_TERM_PROFILES_DCONF_PATH="/org/gnome/terminal/legacy/profiles:"
+        local PROFILES="$(dconf read "${GNOME_TERM_PROFILES_DCONF_PATH}/list" | sed -r -e "s/\[//" -e "s/\]//")"
+
+        if $(echo "${PROFILES}" | grep -Pq "${DCONF_UUID}")
+        then
+            log_info "Profile '${DCONF_NAME}' already installed."
+            continue
+        else
+            log_info "Adding profile '${DCONF_NAME}'."
+        fi
+
+        if [ "${PROFILES}" == "" ]
+        then
+            PROFILES="['${DCONF_UUID}']"
+        else
+            PROFILES="[${PROFILES}, '${DCONF_UUID}']"
+        fi
+
+        dconf write "${GNOME_TERM_PROFILES_DCONF_PATH}/list" "${PROFILES}"
+        dconf write "${GNOME_TERM_PROFILES_DCONF_PATH}/:${DCONF_UUID}/visible-name" "'${DCONF_NAME}'"
+        dconf write "${GNOME_TERM_PROFILES_DCONF_PATH}/:${DCONF_UUID}/audible-bell" "${DCONF_AUDIBLE_BELL}"
+        dconf write "${GNOME_TERM_PROFILES_DCONF_PATH}/:${DCONF_UUID}/palette" "${DCONF_PALETTE}"
+
+        if [ "${IS_DEFAULT}" == "yes" ]
+        then
+            dconf write "${GNOME_TERM_PROFILES_DCONF_PATH}/default" "'${DCONF_UUID}'"
+        fi
+    done
 }
 
 init
