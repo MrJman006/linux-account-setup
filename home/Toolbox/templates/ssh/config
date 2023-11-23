@@ -1,0 +1,4 @@
+Host <id>
+    HostName <domain-name-or-ip-address>
+    User <ssh-username>
+    IdentityFile <ssh-private-key-file-path>
