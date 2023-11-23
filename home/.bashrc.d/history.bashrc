@@ -5,7 +5,11 @@ shopt -s histverify
 alias hg="history | grep -P"
 
 # Clean history logging.
-HISTCONTROL=ignorespace:ignoredupes:erasedups
+HISTCONTROL=ignorespace:erasedups
+
+# Increase bash history file size.
+export HISTFILESIZE=10000
+export HISTSIZE=10000
 
 # History logging.
 function jcd_log_command()

@@ -32,32 +32,40 @@ function jcd_git_init()
     # Add a .gitignore file.
     #
 
+    echo "#" >> .gitignore
     echo "# Ignore files starting with underscores." >> .gitignore
+    echo "#" >> .gitignore
+    echo "" >> .gitignore
     echo "_*" >> .gitignore
     echo "" >> .gitignore
 
-    echo "# Ignore files starting with periods." >> .gitignore
-    echo ".*" >> .gitignore
-    echo "" >> .gitignore
-
+    echo "#" >> .gitignore
     echo "# Ignore specific directories." >> .gitignore
+    echo "#" >> .gitignore
+    echo "" >> .gitignore
     echo "# n/a" >> .gitignore
     echo "" >> .gitignore
 
+    echo "#" >> .gitignore
     echo "# Ignore specific files." >> .gitignore
+    echo "#" >> .gitignore
+    echo "" >> .gitignore
     echo "# n/a" >> .gitignore
     echo "" >> .gitignore
 
-    git add -f .gitignore
+    git add .gitignore
 
     #
     # Add a .gitattributes file.
     #
-
+ 
+    echo "#" >> .gitattributes
     echo "# Automate line ending handling for different operating systems." >> .gitattributes
+    echo "#" >> .gitattributes
+    echo "" >> .gitattributes
     echo "text=auto" >> .gitattributes
 
-    git add -f .gitattributes
+    git add .gitattributes
 
     #
     # Make the first commit.
@@ -84,15 +92,19 @@ function jcd_git_init()
 export GIT_EDITOR=vim
 
 alias gs="git status"
-
 alias ga="git add"
-
 alias gc="git commit"
+alias gb="git branch"
 
 alias gd="git diff --diff-algorithm=patience"
 
 alias gl="git log"
+alias glf="git log --follow"
 alias glg="git log --graph --oneline --decorate"
 alias glgf="git log --graph --oneline --decorate --follow"
 alias glga="git log --graph --oneline --decorate --all"
 alias glgaf="git log --graph --oneline --decorate --all --follow"
+alias glgd="git log --graph --date=short --pretty=format\"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n\""
+alias glgdf="git log --graph --date=short --pretty=format\"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n\" --follow"
+alias glgda="git log --graph --date=short --pretty=format\"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n\" --all"
+alias glgdaf="git log --graph --date=short --pretty=format\"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n\" --all --follow"

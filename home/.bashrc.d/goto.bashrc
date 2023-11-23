@@ -1,4 +1,4 @@
-function goto()
+function jcd_goto()
 {
     #
     # Check for usage option.
@@ -23,29 +23,71 @@ function goto()
         echo "DESCRIPTION"
         echo "    goto is a tool to more easily navigate directories from the command line."
         echo "    It not only performs the same function as the traditional 'cd' command,"
-        echo "    but supports adding and removing destinations to a history. Call goto"
-        echo "    with a valid destination to navigate to it. Call goto without any path argument"
-        echo "    to choose a destination from the history. Use the '--add' and '--delete'"
-        echo "    options to modify the history."
+        echo "    but supports adding and removing destinations to a temporary history"
+        echo "    similar to 'pushd' and 'popd' or a perminant bookmark history."
+        echo ""
+        echo "    There are several ways to call goto. The first is to call it with the"
+        echo "    '--add' option to save a destination to the goto history. Supply a"
+        echo "    valid destination as an argument to save the destination to the history"
+        echo "    If no argument is passed the current working directory will be added"
+        echo "    to the goto history."
+        echo ""
+        echo "        goto --add /usr/local/bin"
+        echo "        goto --add"
+        echo ""
+        echo "    Use the '--bookmark' option to save the destination to the goto bookmarks."
+        echo ""
+        echo "        goto --bookmark /usr/local/bin"
+        echo "        goto --bookmark"
+        echo ""
+        echo "    Use the '--delete' option to remove the destination from both the goto"
+        echo "    bookmarks and history. The destination can be either a path string or"
+        echo "    the history or bookmark identifier. If you supply a history or bookmark"
+        echo "    identifier, it will only be removed from the associated store."
+        echo ""
+        echo "        goto --delete /usr/local/bin"
+        echo "        goto --delete h1
+        echo "        goto --delete b1
+        echo "        goto --delete"
+        echo ""
+        echo "    Call goto without any options to navigate to a destination. If you"
+        echo "    supply a destination argument, history identifier, or bookmark identifier,"
+        echo "    you will navigate to the associated destination."
+        echo ""
+        echo "        goto /usr/local/bin"
+        echo "        goto h1"
+        echo "        goto b1"
+        echo ""
+        echo "    Calling goto without any argument will enable interactive destination"
+        echo "    selection."
+        echo ""
+        echo "        goto"
         echo ""
         echo "OPTIONS"
         echo "    -h|--help"
         echo "        Show this manual page."
         echo ""
         echo "    -a|--add"
-        echo "        Add a directory to the history."
+        echo "        Add a destination to the history destination list."
+        echo ""
+        echo "    -b|--bookmark"
+        echo "        Add a destination to the bookmark destination list."
         echo ""
         echo "    -d|--delete"
-        echo "        Delete a directory form the history."
+        echo "        Delete a destination from one or both of the history and/or bookmark"
+        echo "        destination list."
         echo ""
         echo "ARGUMENTS"
-        echo "    [path]"
-        echo "        A path to go to. If supplied with the '--add' or '--delete' flag,"
-        echo "        the history will be modified instead."
+        echo "    [destination_path]"
+        echo "        A destination to go to. If used with the '--add' or '--bookmark' option,"
+        echo "        the destination will be added to the approprite destination list. If"
+        echo "        used with the '--delete' option, the destination will be removed"
+        echo "        from all destination lists.
         echo ""
-        echo "    [history-number]"
-        echo "        The history number to go to. If supplied with the '--add' or '--delete' flag,"
-        echo "        the history will be modified instead."
+        echo "    [id]"
+        echo "        A history or bookmark ID to go to. If used with the '--delete'"
+        echo "        option the ID will be removed from the associated destination"
+        echo "        list."
         echo ""
         echo "END"
 
@@ -59,6 +101,7 @@ function goto()
     local -A options
 
     options[add]="no"
+    options[bookmark]="no"
     options[delete]="no"
     options[interactive]="no"
 
@@ -69,6 +112,10 @@ function goto()
             -a|--add)
                 shift
                 options[add]="yes"
+                ;;
+            -b|--bookmark)
+                shift
+                options[bookmark]="yes"
                 ;;
             -d|--delete)
                 shift
