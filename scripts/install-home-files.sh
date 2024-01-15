@@ -12,7 +12,7 @@ readonly PROJECT_DIR_PATH="$(cd "${THIS_SCRIPT_DIR_PATH}/.." && pwd -P)"
 readonly CURRENT_USER="${SUPER_USER:-${USER:-$(whoami)}}"
 readonly BACKUP_DIR_PATH="${HOME}/_home-files/${INVOKED_DATE_TIME}"
 
-for HOME_FILE_RPATH in $(cd "${PROJECT_DIR_PATH}/home"; git ls-files)
+for HOME_FILE_RPATH in $(cd "${PROJECT_DIR_PATH}/home-files"; git ls-files)
 do
     echo "Installing '${HOME_FILE_RPATH}'."
 
@@ -33,5 +33,5 @@ do
     #
 
     mkdir -p "${HOME}/${HOME_FILE_DIR_RPATH}"
-    cp -r "${PROJECT_DIR_PATH}/home/${HOME_FILE_RPATH}" "${HOME}/${HOME_FILE_RPATH}"
+    cp -r "${PROJECT_DIR_PATH}/home-files/${HOME_FILE_RPATH}" "${HOME}/${HOME_FILE_RPATH}"
 done
