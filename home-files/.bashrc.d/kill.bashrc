@@ -27,7 +27,7 @@ function jcd_kill()
     if [[ "${pid}" != "" ]]
     then
         echo "pid: ${pid}"
-        command kill ${pid}
+        command kill -9 ${pid}
     fi
 }
 
