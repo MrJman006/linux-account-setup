@@ -5,7 +5,7 @@ set vi-cmd-mode-string (VI)
 
 $if mode=vi
     set keymap vi-insert
-    "asdf": vi-movement-mode
+    "fd": vi-movement-mode
 
     set keymap vi-command
     "B": beginning-of-line
