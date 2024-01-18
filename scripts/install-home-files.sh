@@ -14,9 +14,9 @@ readonly BACKUP_DIR_PATH="${HOME}/_home-files/${INVOKED_DATE_TIME}"
 
 for HOME_FILE_RPATH in $(cd "${PROJECT_DIR_PATH}/home-files"; git ls-files)
 do
-    echo "Installing '${HOME_FILE_RPATH}'."
+    echo "-- Installing '${HOME_FILE_RPATH}'."
 
-    HOME_FILE_DIR_RPATH="$(dirname "${HOME_FILE_RPATH}" | sed -r "s/^\.$//")"
+    HOME_FILE_DIR_RPATH="$(dirname "${HOME_FILE_RPATH}")"
 
     #
     # Backup existing home files.
