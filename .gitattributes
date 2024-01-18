@@ -1,2 +1,2 @@
-# Automate line ending changes for different operating systems.
+# Set the default line ending conversion behavior, in case people don't have core.autocrlf set.
 text=auto
