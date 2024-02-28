@@ -1,4 +1,4 @@
-function seconds_to_dhms()
+function format_seconds()
 {
     local show_usage="no"
 
@@ -26,8 +26,8 @@ function seconds_to_dhms()
     local m=$(( seconds /60 % 60 ))
     local s=$(( seconds % 60 ))
 
-    [ ${d} -ne 0 ] && printf "%02dd:" $D || printf "00d:"
-    [ ${h} -ne 0 ] && printf "%02dh:" $H || printf "00h:"
-    [ ${m} -ne 0 ] && printf "%02dm:" $M || printf "00m:"
-    [ ${s} -ne 0 ] && printf "%02ds" $S || printf "00s"
+    [[ ${d} -ne 0 ]] && printf "%02dd:" $d || printf "00d:"
+    [[ ${h} -ne 0 ]] && printf "%02dh:" $h || printf "00h:"
+    [[ ${m} -ne 0 ]] && printf "%02dm:" $m || printf "00m:"
+    [[ ${s} -ne 0 ]] && printf "%02ds" $s || printf "00s"
 }

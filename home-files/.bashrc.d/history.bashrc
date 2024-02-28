@@ -11,16 +11,15 @@ HISTCONTROL=ignorespace:erasedups
 export HISTFILESIZE=10000
 export HISTSIZE=10000
 
-# History logging.
 function __log_command()
 {
     local date_invoked="$(date +%Y-%m-%d)"
     local time_invoked="$(date +%H-%M-%S)"
     local terminal_id="$(tty)"
     local working_dir_path="$(pwd -P)"
-    local effective_user="${USER}"
-    local real_user="${SUDO_USER:-${USER}}"
-    local user_home_dir_path="$(getent passwd ${real_user} | cut -d ":" -f 6)"
+    local effective_user="${USER:-$(whoami)}"
+    local real_user="${SUDO_USER:-${effective_user}}"
+    local user_home_dir_path="${HOME:-$(getent passwd ${real_user} | cut -d ":" -f 6)}"
     local history_log_file_path="${user_home_dir_path}/.history-log"
 
     #
@@ -40,7 +39,6 @@ function __log_command()
     skip_list+=("cd")
     skip_list+=("pushd")
     skip_list+=("popd")
-    skip_list+=("goto")
     skip_list+=("pwd")
 
     local cmd
@@ -82,7 +80,7 @@ function __log_command()
     echo "--"                                           1>>"${history_log_file_path}"
 }
 
-if ! $(echo "${PROMPT_COMMAND}" | grep -Pq "(^|;)__log_command;")
-then
-    export PROMPT_COMMAND="${PROMPT_COMMAND}__log_command;"
-fi
+#if ! $(echo "${PROMPT_COMMAND}" | grep -Pq "(^|;)__log_command;")
+#then
+#    export PROMPT_COMMAND="${PROMPT_COMMAND} __log_command;"
+#fi

@@ -11,6 +11,9 @@ function generate_passphrase()
     if [[ "${show_usage}" == "yes" ]]
     then
         echo "usage: generate_passphrase [-h|--help] [length]"
+        echo ""
+        echo "    length"
+        echo "        The raw passphrase length to generate. The default is length is 16." 
         return 1
     fi
 
@@ -21,9 +24,9 @@ function generate_passphrase()
         length=$(( ${1} ))
     fi
 
-    local raw_passphrase="$(cat /dev/urandom | tr -dc a-z | head -c "${LENGTH}")"
-    local formatted_passphrase="$(echo "${RAW_PASSPHRASE}" | sed -r -e "s/([a-z]{4})/\1-/g" -e "s/-$//")"
+    local raw_passphrase="$(cat /dev/urandom | tr -dc a-z | head -c "${length}")"
+    local formatted_passphrase="$(echo "${raw_passphrase}" | sed -r -e "s/([a-z]{4})/\1-/g" -e "s/-$//")"
 
-    echo "${raw_passphrase}"
-    echo "${formatted_passphrase}"
+    printf "%-21s: %s\n" "Raw Passphrase" "${raw_passphrase}"
+    printf "%-21s: %s\n" "Formatted Passphrase" "${formatted_passphrase}"
 }

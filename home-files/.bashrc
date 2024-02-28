@@ -25,10 +25,10 @@ fi
 # Source terminal startup file.
 #
 
-TERMINAL_NUMBER="$(ps -e -o pid,ppid,command | grep -P "bash$" | sed -r "s/^\s+//" | tr -s " " | cut -d " " -f 1 | sort -n | grep -n "$$" | cut -d ":" -f 1)"
-TERMINAL_STARTUP_FILE_PATH="${HOME}/.terminal-startup.${TERMINAL_NUMBER}"
-if [[ -f "${TERMINAL_STATUP_FILE_PATH}" ]]
-then
-    source "${TERMINAL_STATUP_FILE_PATH}"
-    rm "${TERMINAL_STATUP_FILE_PATH}"
-fi
+#TERMINAL_NUMBER="$(ps -e -o pid,ppid,command | grep -P "bash$" | sed -r "s/^\s+//" | tr -s " " | cut -d " " -f 1 | sort -n | grep -n "$$" | cut -d ":" -f 1)"
+#TERMINAL_STARTUP_FILE_PATH="${HOME}/.terminal-startup.${TERMINAL_NUMBER}"
+#if [[ -f "${TERMINAL_STATUP_FILE_PATH}" ]]
+#then
+#    source "${TERMINAL_STATUP_FILE_PATH}"
+#    rm "${TERMINAL_STATUP_FILE_PATH}"
+#fi

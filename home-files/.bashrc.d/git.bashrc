@@ -1,89 +1,5 @@
 export GIT_EDITOR=vim
 
-function __setup_git_shortcuts()
-{
-    #
-    # Define the shortcuts.
-    #
-
-    local shortcut_defs=()
-
-    # Shortcut to set the 'user.name' config item.
-    shortcut_defs+=('gcun=(git config user.name)')
-
-    # Shortcut to set the 'user.email' config item.
-    shortcut_defs+=('gcun=(git config user.name)')
-
-    # Shortcut for working with branches.
-    shortcut_defs+=('gb=(git branch)')
-
-    # Shortcut for checking repo status.
-    shortcut_defs+=('gs=(git status)')
-
-    # Shortcut for adding files to the stage.
-    shortcut_defs+=('ga=(git add)')
-
-    # Shortcut for commiting staged files.
-    shortcut_defs+=('gc=(git commit)')
-
-    # Shortcut to diff files or commits.
-    shortcut_defs+=('gd=(git diff --diff-algorithm=patience)')
-
-    # Shortcut to diff staged files.
-    shortcut_defs+=('gd=(git diff --diff-algorithm=patience --staged)')
-
-    # Shortcut to show log entries on a particular branch.
-    shortcut_defs+=('gl=(git log)')
-
-    # Shortcut to show log entries on a particular branch for a specific set of files.
-    shortcut_defs+=('glf=(git log --follow)')
-
-    # Shortcut to show log entries on a particular branch in a graph format.
-    shortcut_defs+=('glg=(git log --graph --oneline --decorate)')
-
-    # Shortcut to show log entries on a particular branch for a specific set of files in a graph format.
-    shortcut_defs+=('glgf=(git log --graph --oneline --decorate --follow)')
-
-    # Shortcut to show log entries on all branches in a graph format.
-    shortcut_defs+=('glga=(git log --graph --oneline --decorate --all)')
-
-    # Shortcut to show log entries on all branches for a specific set of files in a graph format.
-    shortcut_defs+=('glgaf=(git log --graph --oneline --decorate --all --follow)')
-
-    # Shortcut to show log entries on a particular branch in a graph format with a little more detail.
-    shortcut_defs+=('glgd=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n")')
-
-    # Shortcut to show log entries on a particular branch for a specific set of files in a graph format with a little more detail.
-    shortcut_defs+=('glgdf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --follow)')
-
-    # Shortcut to show log entries on all branches in a graph format with a little more detail.
-    shortcut_defs+=('glgda=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --all)')
-
-    # Shortcut to show log entries on all branches for a specific set of files in a graph format.
-    shortcut_defs+=('glgdaf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --all --follow)')
-
-    #
-    # Build the shortcuts with completions.
-    #
-
-    for shortcut_def in "${shortcut_defs[@]}"
-    do
-        local shortcut_name="$(echo "${shortcut_def}" | cut -d "=" -f 1)"
-        local shortcut_command="$(echo "${shortcut_def}" | cut -d "=" -f 2 | sed -E "s/^\(|\)$//g")"
-        local shortcut_func="function ${shortcut_name}(){ ${shortcut_command} \"\$@\"; }"
-        local git_command="$(echo "${shortcut_command}" | tr -s " " | cut -d " " -f 2)"
-        local completion_func_name="__completion_git_${git_command//-/_}"
-        local completion_func="function ${completion_func_name}(){ __git_func_wrap _git_${git_command//-/_}; }"
-
-        eval "${shortcut_func}"
-        eval "${completion_func}"
-        eval "complete -o bashdefault -o default -o nospace -F ${completion_func_name} ${shortcut_name}"
-    done
-}
-__setup_git_shortcuts
-unset __setup_git_shortcuts
-
-
 function git_init()
 {
     if [[ -d .git ]]
@@ -157,3 +73,101 @@ function git_init()
 
     echo "Git repo setup successfully."
 }
+
+function __setup_git_shortcuts()
+{
+    #
+    # Define the shortcuts.
+    #
+
+    local shortcut_defs=()
+
+    # Shortcut to set the 'user.name' config item.
+    shortcut_defs+=('gcun=(git config user.name)')
+
+    # Shortcut to set the 'user.email' config item.
+    shortcut_defs+=('gcun=(git config user.name)')
+
+    # Shortcut for working with branches.
+    shortcut_defs+=('gb=(git branch)')
+
+    # Shortcut for checking out a branch.
+    shortcut_defs+=('gco=(git checkout)')
+
+    # Shortcut for checking repo status.
+    shortcut_defs+=('gs=(git status)')
+
+    # Shortcut for adding files to the stage.
+    shortcut_defs+=('ga=(git add)')
+
+    # Shortcut for commiting staged files.
+    shortcut_defs+=('gcm=(git commit)')
+
+    # Shortcut for commiting staged files to the last commit.
+    shortcut_defs+=('gcma=(git commit --amend)')
+
+    # Shortcut to diff files or commits.
+    shortcut_defs+=('gd=(git diff --diff-algorithm=patience)')
+
+    # Shortcut to diff staged files.
+    shortcut_defs+=('gds=(git diff --diff-algorithm=patience --staged)')
+
+    # Shortcut to fetch remote changes.
+    shortcut_defs+=('gf=(git fetch --prune)')
+    
+    # Shortcut to pull in remote changes.
+    shortcut_defs+=('gpll=(git pull)')
+
+    # Shortcut to push changes to a remote.
+    shortcut_defs+=('gpsh=(git push)')
+
+    # Shortcut to show log entries on a particular branch.
+    shortcut_defs+=('gl=(git log)')
+
+    # Shortcut to show log entries on a particular branch for a specific set of files.
+    shortcut_defs+=('glf=(git log --follow)')
+
+    # Shortcut to show log entries on a particular branch in a graph format.
+    shortcut_defs+=('glg=(git log --graph --oneline --decorate)')
+
+    # Shortcut to show log entries on a particular branch for a specific set of files in a graph format.
+    shortcut_defs+=('glgf=(git log --graph --oneline --decorate --follow)')
+
+    # Shortcut to show log entries on all branches in a graph format.
+    shortcut_defs+=('glga=(git log --graph --oneline --decorate --all)')
+
+    # Shortcut to show log entries on all branches for a specific set of files in a graph format.
+    shortcut_defs+=('glgaf=(git log --graph --oneline --decorate --all --follow)')
+
+    # Shortcut to show log entries on a particular branch in a graph format with a little more detail.
+    shortcut_defs+=('glgd=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n")')
+
+    # Shortcut to show log entries on a particular branch for a specific set of files in a graph format with a little more detail.
+    shortcut_defs+=('glgdf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --follow)')
+
+    # Shortcut to show log entries on all branches in a graph format with a little more detail.
+    shortcut_defs+=('glgda=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --all)')
+
+    # Shortcut to show log entries on all branches for a specific set of files in a graph format.
+    shortcut_defs+=('glgdaf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --all --follow)')
+
+    #
+    # Build the shortcuts with completions.
+    #
+
+    for shortcut_def in "${shortcut_defs[@]}"
+    do
+        local shortcut_name="$(echo "${shortcut_def}" | cut -d "=" -f 1)"
+        local shortcut_command="$(echo "${shortcut_def}" | cut -d "=" -f 2- | sed -E "s/^\(|\)$//g")"
+        local shortcut_func="function ${shortcut_name}(){ ${shortcut_command} \"\$@\"; }"
+        local git_command="$(echo "${shortcut_command}" | tr -s " " | cut -d " " -f 2)"
+        local completion_func_name="__completion_git_${git_command//-/_}"
+        local completion_func="function ${completion_func_name}(){ __git_func_wrap _git_${git_command//-/_}; }"
+
+        eval "${shortcut_func}"
+        eval "${completion_func}"
+        eval "complete -o bashdefault -o default -o nospace -F ${completion_func_name} ${shortcut_name}"
+    done
+}
+__setup_git_shortcuts
+unset __setup_git_shortcuts
