@@ -1,4 +1,4 @@
-function jcd_set_terminal_title()
+function set_terminal_title()
 {
     local title="${1:-}"
 

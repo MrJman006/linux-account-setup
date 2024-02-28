@@ -1,4 +1,4 @@
-function jcd_file_count()
+function file_count()
 {
     #
     # Check for usage option.
@@ -17,11 +17,11 @@ function jcd_file_count()
         echo "    file_count"
         echo ""
         echo "USAGE"
-        echo "    file_count [options] [path]"
+        echo "    file_count [options] [directory]"
         echo ""
         echo "DESCRIPTION"
-        echo "    file_count counts the number of files in a directory path. If no"
-        echo "    directory path is supplied, the current working directory is used."
+        echo "    file_count counts the number of files in a directory. If no"
+        echo "    directory is supplied, the current working directory is used."
         echo ""
         echo "OPTIONS"
         echo "    -h|--help"
@@ -31,8 +31,8 @@ function jcd_file_count()
         echo "        Count files recursively."
         echo ""
         echo "ARGUMENTS"
-        echo "    [path]"
-        echo "        A path to count files in."
+        echo "    directory"
+        echo "        A directory to count files in."
         echo ""
         echo "END"
 
@@ -102,4 +102,3 @@ function jcd_file_count()
         printf "File Count: %d\n" $(find "${path}" -maxdepth 1 -type f | wc -l)
     fi
 }
-

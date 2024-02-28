@@ -1,4 +1,4 @@
-function jcd_kill()
+function kill()
 {
     local target="${1}"
     local process
@@ -31,7 +31,7 @@ function jcd_kill()
     fi
 }
 
-function jcd_killall()
+function killall()
 {
     local -a targets
     targets=("$@")
@@ -42,11 +42,8 @@ function jcd_killall()
 
         while [ "${process}" != "" ]
         do
-            jcd_kill "${target}"
+            kill "${target}"
             process="$(ps -e -o pid,ppid,command | grep -P "${target}" | grep -v "grep" | head -n 1)"
         done
     done
 }
-
-alias kill="jcd_kill"
-alias killall="jcd_killall"

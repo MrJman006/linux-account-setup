@@ -12,7 +12,7 @@ export HISTFILESIZE=10000
 export HISTSIZE=10000
 
 # History logging.
-function jcd_log_command()
+function __log_command()
 {
     local date_invoked="$(date +%Y-%m-%d)"
     local time_invoked="$(date +%H-%M-%S)"
@@ -82,7 +82,7 @@ function jcd_log_command()
     echo "--"                                           1>>"${history_log_file_path}"
 }
 
-if ! $(echo "${PROMPT_COMMAND}" | grep -Pq "(^|;)jcd_log_command;")
+if ! $(echo "${PROMPT_COMMAND}" | grep -Pq "(^|;)__log_command;")
 then
-    export PROMPT_COMMAND="${PROMPT_COMMAND}jcd_log_command;"
+    export PROMPT_COMMAND="${PROMPT_COMMAND}__log_command;"
 fi

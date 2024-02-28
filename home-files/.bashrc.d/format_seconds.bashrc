@@ -1,4 +1,4 @@
-function jcd_format_seconds()
+function seconds_to_dhms()
 {
     local show_usage="no"
 
@@ -31,4 +31,3 @@ function jcd_format_seconds()
     [ ${m} -ne 0 ] && printf "%02dm:" $M || printf "00m:"
     [ ${s} -ne 0 ] && printf "%02ds" $S || printf "00s"
 }
-
