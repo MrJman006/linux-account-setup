@@ -82,73 +82,35 @@ function __setup_git_shortcuts()
 
     local shortcut_defs=()
 
-    # Shortcut to set the 'user.name' config item.
     shortcut_defs+=('gcun=(git config user.name)')
+    shortcut_defs+=('gcue=(git config user.email)')
 
-    # Shortcut to set the 'user.email' config item.
-    shortcut_defs+=('gcun=(git config user.name)')
-
-    # Shortcut for working with branches.
     shortcut_defs+=('gb=(git branch)')
+    shortcut_defs+=('gbt=(git push --set-upstream)')
+    shortcut_defs+=('gbp=(git push)')
+    shortcut_defs+=('gbu=(git pull)')
+    shortcut_defs+=('gbc=(git checkout)')
+    shortcut_defs+=('gbd=(git branch -D)')
 
-    # Shortcut for checking out a branch.
-    shortcut_defs+=('gco=(git checkout)')
-
-    # Shortcut for checking repo status.
     shortcut_defs+=('gs=(git status)')
+    shortcut_defs+=('gsa=(git add)')
+    shortcut_defs+=('gsr=(git restore --staged)')
+    shortcut_defs+=('gsc=(git commit)')
+    shortcut_defs+=('gsca=(git commit --amend)')
 
-    # Shortcut for adding files to the stage.
-    shortcut_defs+=('ga=(git add)')
 
-    # Shortcut for commiting staged files.
-    shortcut_defs+=('gcm=(git commit)')
-
-    # Shortcut for commiting staged files to the last commit.
-    shortcut_defs+=('gcma=(git commit --amend)')
-
-    # Shortcut to diff files or commits.
     shortcut_defs+=('gd=(git diff --diff-algorithm=patience)')
-
-    # Shortcut to diff staged files.
     shortcut_defs+=('gds=(git diff --diff-algorithm=patience --staged)')
 
-    # Shortcut to fetch remote changes.
-    shortcut_defs+=('gf=(git fetch --prune)')
+    shortcut_defs+=('gru=(git fetch --prune)')
     
-    # Shortcut to pull in remote changes.
-    shortcut_defs+=('gpll=(git pull)')
-
-    # Shortcut to push changes to a remote.
-    shortcut_defs+=('gpsh=(git push)')
-
-    # Shortcut to show log entries on a particular branch.
-    shortcut_defs+=('gl=(git log)')
-
-    # Shortcut to show log entries on a particular branch for a specific set of files.
-    shortcut_defs+=('glf=(git log --follow)')
-
-    # Shortcut to show log entries on a particular branch in a graph format.
     shortcut_defs+=('glg=(git log --graph --oneline --decorate)')
-
-    # Shortcut to show log entries on a particular branch for a specific set of files in a graph format.
-    shortcut_defs+=('glgf=(git log --graph --oneline --decorate --follow)')
-
-    # Shortcut to show log entries on all branches in a graph format.
     shortcut_defs+=('glga=(git log --graph --oneline --decorate --all)')
-
-    # Shortcut to show log entries on all branches for a specific set of files in a graph format.
+    shortcut_defs+=('glgf=(git log --graph --oneline --decorate --follow)')
     shortcut_defs+=('glgaf=(git log --graph --oneline --decorate --all --follow)')
-
-    # Shortcut to show log entries on a particular branch in a graph format with a little more detail.
     shortcut_defs+=('glgd=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n")')
-
-    # Shortcut to show log entries on a particular branch for a specific set of files in a graph format with a little more detail.
-    shortcut_defs+=('glgdf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --follow)')
-
-    # Shortcut to show log entries on all branches in a graph format with a little more detail.
     shortcut_defs+=('glgda=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --all)')
-
-    # Shortcut to show log entries on all branches for a specific set of files in a graph format.
+    shortcut_defs+=('glgdf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --follow)')
     shortcut_defs+=('glgdaf=(git log --graph --date=short --pretty=format"%C(auto)%h %D%C(reset)%n%C(auto)subject: %s%C(reset)%n    %C(dim white)date: %ad%C(reset)%n%C(dim white)    author: %an%C(reset)%n" --all --follow)')
 
     #
